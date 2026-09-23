@@ -32,6 +32,8 @@
 }
 
 .slider {
+  --favorite-image-height: min(13.5rem, 30svh);
+  position: relative;
   touch-action: pan-y;
   user-select: none;
 }
@@ -189,6 +191,97 @@
   from {
     opacity: 0;
     transform: translateX(-4rem) rotate(-8deg) scale(0.9);
+  }
+}
+
+/*
+ * Phones and small tablets: keep every piece of content but fit a whole slide
+ * into one screen — shorter photo, arrows over the photo's edges, "Perfect for" on one row.
+ */
+@media (max-width: 899px) {
+  .section {
+    padding-block: 3rem;
+  }
+
+  .header {
+    margin-bottom: 1.5rem;
+  }
+
+  .heading {
+    margin-bottom: 0.5rem;
+    font-size: 2.25rem;
+  }
+
+  .intro {
+    margin-bottom: 1rem;
+    font-size: 0.9375rem;
+  }
+
+  .slide {
+    gap: 1rem;
+  }
+
+  .imageWrap {
+    height: var(--favorite-image-height);
+  }
+
+  .image {
+    width: auto;
+    max-width: 100%;
+    height: 100%;
+  }
+
+  .name {
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+  }
+
+  .description {
+    margin-bottom: 0.75rem;
+    font-size: 0.9375rem;
+  }
+
+  .perfectFor {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem 1.25rem;
+  }
+
+  .perfectForLabel {
+    margin: 0;
+    font-size: 0.8125rem;
+  }
+
+  .methods {
+    gap: 1rem;
+    font-size: 0.75rem;
+  }
+
+  .methods li {
+    gap: 0.25rem;
+  }
+
+  .methodIcon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  /* Arrows sit on the left and right edges of the photo instead of their own row */
+  .controls {
+    position: absolute;
+    inset: calc(var(--favorite-image-height) / 2 - 1.375rem) 0 auto;
+    justify-content: space-between;
+    margin: 0;
+    pointer-events: none;
+  }
+
+  .arrow {
+    width: 2.75rem;
+    height: 2.75rem;
+    background: rgb(20 20 20 / 0.6);
+    pointer-events: auto;
   }
 }
 
