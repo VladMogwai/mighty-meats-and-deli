@@ -23,6 +23,14 @@ export const ProductCategories: CollectionConfig = {
     slugField(),
     { name: 'description', type: 'textarea' },
     {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Shown on the category tile and for products in this category that have no photo of their own.',
+      },
+    },
+    {
       name: 'sortOrder',
       type: 'number',
       defaultValue: 0,

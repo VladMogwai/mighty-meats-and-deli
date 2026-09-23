@@ -10,3 +10,6 @@ export const resolveLinkHref = (link: CmsLink): string | null => {
   const page = link.page as Page | number | null | undefined
   return page && typeof page === 'object' ? pagePath(page.slug) : null
 }
+
+/** URL of a product category page. */
+export const categoryPath = (slug: string): string => `/products/${slug}`

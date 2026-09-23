@@ -1,42 +1,43 @@
-import { MediaImage } from '@/components/MediaImage'
-import { getAvailableProducts } from '@/lib/cms'
 import type { ProductCategory, ProductListBlock as ProductListBlockData } from '@mighty-meats/shared/payload-types'
+import Link from 'next/link'
+
+import { MediaImage } from '@/components/MediaImage'
+import { RevealText } from '@/components/motion/RevealText'
+import { getAvailableProducts } from '@/lib/cms'
+import { categoryPath } from '@/lib/links'
 
 import styles from './ProductList.module.css'
 
+/** Category tiles; each opens the category page with its products. */
 export const ProductListBlock = async ({ heading, intro, categories, note }: ProductListBlockData) => {
-  const selected = categories.filter(
-    (category): category is ProductCategory => typeof category === 'object',
-  )
+  const selected = categories.filter((category): category is ProductCategory => typeof category === 'object')
   const products = await getAvailableProducts(selected.map((category) => category.id).join(','))
+  const countFor = (categoryId: number) =>
+    products.filter((product) => (typeof product.category === 'object' ? product.category.id : product.category) === categoryId)
+      .length
 
   return (
     <section className={`container ${styles.productList}`}>
-      {heading && <h2>{heading}</h2>}
-      {intro && <p>{intro}</p>}
-      {selected.map((category) => {
-        const items = products.filter(
-          (product) =>
-            (typeof product.category === 'object' ? product.category.id : product.category) === category.id,
-        )
-        if (items.length === 0) return null
-        return (
-          <div key={category.id} className={styles.category}>
-            <h3>{category.title}</h3>
-            {category.description && <p>{category.description}</p>}
-            <ul className={styles.grid}>
-              {items.map((product) => (
-                <li key={product.id} className={styles.card}>
-                  <MediaImage media={product.image} sizes="(min-width: 768px) 25vw, 50vw" />
-                  <h4>{product.name}</h4>
-                  {product.description && <p>{product.description}</p>}
-                  {product.price && <p className={styles.price}>{product.price}</p>}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )
-      })}
+      {heading && <RevealText as="h2" className={styles.heading} text={heading} />}
+      {intro && <p className={styles.intro}>{intro}</p>}
+      <ul className={styles.tiles}>
+        {selected.map((category) => {
+          const count = countFor(category.id)
+          return (
+            <li key={category.id}>
+              <Link href={categoryPath(category.slug)} className={styles.tile}>
+                <MediaImage media={category.image} sizes="(min-width: 900px) 33vw, 50vw" className={styles.image} />
+                <span className={styles.label}>
+                  <span className={styles.title}>{category.title}</span>
+                  <span className={styles.count}>
+                    {count} {count === 1 ? 'product' : 'products'}
+                  </span>
+                </span>
+              </Link>
+            </li>
+          )
+        })}
+      </ul>
       {note && <p className={styles.note}>{note}</p>}
     </section>
   )

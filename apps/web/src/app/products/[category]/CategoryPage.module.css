@@ -1,0 +1,26 @@
+.page {
+  padding-block: 2rem 4rem;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.back:hover {
+  color: var(--color-accent);
+}
+
+.heading {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2.5rem, 8vw, 4rem);
+}
+
+.description {
+  max-width: 40rem;
+  margin: 0 0 1.5rem;
+}

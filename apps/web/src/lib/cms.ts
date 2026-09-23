@@ -5,6 +5,7 @@ import type {
   Page,
   Partner,
   Product,
+  ProductCategory,
   SiteSetting,
   Testimonial,
 } from '@mighty-meats/shared/payload-types'
@@ -69,6 +70,13 @@ export const getAvailableProducts = cache((categoryIds: string) =>
     sort: 'name',
   }),
 )
+
+export const getAllCategories = cache(() => findAll<ProductCategory>('product-categories', { sort: 'sortOrder' }))
+
+export const getCategoryBySlug = cache(async (slug: string): Promise<ProductCategory | null> => {
+  const docs = await findAll<ProductCategory>('product-categories', { 'where[slug][equals]': slug, limit: 1 })
+  return docs[0] ?? null
+})
 
 export const getAllPartners = cache(() => findAll<Partner>('partners', { sort: 'name' }))
 

@@ -373,6 +373,10 @@ export interface ProductCategory {
    */
   slug: string;
   description?: string | null;
+  /**
+   * Shown on the category tile and for products in this category that have no photo of their own.
+   */
+  image?: (number | null) | Media;
   sortOrder?: number | null;
   updatedAt: string;
   createdAt: string;
@@ -857,6 +861,7 @@ export interface ProductCategoriesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   description?: T;
+  image?: T;
   sortOrder?: T;
   updatedAt?: T;
   createdAt?: T;
