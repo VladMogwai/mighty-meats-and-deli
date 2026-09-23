@@ -97,7 +97,7 @@ pnpm --filter @mighty-meats/cms generate:importmap
 
 1. Workers & Pages → Create → Pages → Connect to Git → этот репозиторий.
 2. Build command: `pnpm --filter @mighty-meats/web build`, output directory: `apps/web/out`.
-3. Переменные: `CMS_URL` и `NEXT_PUBLIC_CMS_URL` (адрес CMS на Render), `NEXT_PUBLIC_SITE_URL` (адрес сайта), `NODE_VERSION=22`.
+3. Переменные: `NODE_VERSION=22.23.2`, `PNPM_VERSION=10.34.5`. Адреса CMS и сайта (`CMS_URL`, `NEXT_PUBLIC_CMS_URL`, `NEXT_PUBLIC_SITE_URL`) лежат в `apps/web/.env.production`: они публичные, а переменные из панели Cloudflare до `next build` не доходили. Переменная, заданная в окружении сборки, по-прежнему важнее файла.
 4. Settings → Builds → Deploy hooks → создать hook, его URL прописать в Render как `WEB_DEPLOY_HOOK_URL`.
 
 ### 4. GitHub — чтобы Supabase не засыпал
