@@ -1,0 +1,128 @@
+/* Structural base only — the visual design comes later. */
+:root {
+  --color-bg: #f7f1e8;
+  --color-text: #1a1a1a;
+  --color-border: #e2d9cc;
+  --color-accent: #d94a4a;
+  --color-dark: #141414;
+  --color-on-dark: #f7f1e8;
+  --color-error: #b00020;
+  --gutter: 1rem;
+  --container-width: 72rem;
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body), system-ui, sans-serif;
+  line-height: 1.5;
+  color: var(--color-text);
+  background: var(--color-bg);
+  overflow-wrap: break-word;
+}
+
+img,
+video,
+iframe {
+  max-width: 100%;
+}
+
+input,
+textarea,
+button,
+select {
+  font: inherit;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  /* 16px+ prevents iOS zoom on focus */
+  font-size: max(1rem, 16px);
+  border: 1px solid var(--color-border);
+}
+
+a {
+  color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--color-accent);
+  font-size: 0.875rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+/* Reveal animations start off-screen horizontally; never let them create a sideways scroll */
+main {
+  overflow-x: clip;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.page-title {
+  margin-block: 2rem 1rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 1.25rem;
+  border: 1px solid currentColor;
+  background: transparent;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+}
+
+.skip-link:focus {
+  left: var(--gutter);
+  top: var(--gutter);
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: var(--color-bg);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 1.5rem;
+  }
+}

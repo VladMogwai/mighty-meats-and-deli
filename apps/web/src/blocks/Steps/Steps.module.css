@@ -1,0 +1,172 @@
+.steps {
+  margin-block: 5rem;
+}
+
+.header {
+  max-width: 40rem;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.heading {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  position: relative;
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+
+.copy {
+  position: relative;
+}
+
+/* Big outlined numeral sitting on a soft pink glow */
+.number {
+  position: relative;
+  width: fit-content;
+  margin-bottom: 0.5rem;
+  color: transparent;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: clamp(6rem, 18vw, 10rem);
+  line-height: 1;
+  -webkit-text-stroke: 3px var(--color-accent);
+}
+
+.number::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 50% auto auto 50%;
+  width: 2.2em;
+  height: 2.2em;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(217 74 74 / 0.12), transparent 70%);
+  transform: translate(-50%, -50%);
+}
+
+.title {
+  margin: 0 0 1rem;
+  color: var(--color-accent);
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+.text {
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 6rem 0 0 6rem;
+  /* Fade the outer edge into the page */
+  mask-image: linear-gradient(to right, #000 70%, transparent);
+}
+
+.step[data-even='true'] .media img {
+  border-radius: 0 6rem 6rem 0;
+  mask-image: linear-gradient(to left, #000 70%, transparent);
+}
+
+/* Connector curve between steps */
+.connector {
+  height: 5rem;
+  width: 50%;
+  margin-left: 5%;
+}
+
+.connector[data-mirrored='true'] {
+  margin-left: auto;
+  margin-right: 5%;
+}
+
+.connector[data-mirrored='true'] svg {
+  transform: scaleX(-1);
+}
+
+.connector svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.connectorPath {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/*
+ * The line is revealed with a clip that opens from the start of the curve,
+ * following the scroll position. (Dash-offset drawing does not work together
+ * with non-scaling-stroke, which keeps the line 3px thick at any width.)
+ */
+.connector svg {
+  clip-path: inset(0 100% 0 0);
+  animation: draw linear both;
+  animation-timeline: view();
+  animation-range: entry 20% cover 60%;
+}
+
+/* Browsers without scroll-driven animations reveal the line once it scrolls into view */
+@supports not (animation-timeline: view()) {
+  .connector svg {
+    animation: draw 1.4s var(--reveal-ease) both paused;
+  }
+
+  .connector[data-revealed='true'] svg {
+    animation-play-state: running;
+  }
+}
+
+@keyframes draw {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (min-width: 768px) {
+  .step {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 4rem;
+  }
+
+  .step[data-even='true'] .copy {
+    order: 2;
+  }
+
+  .step[data-even='true'] .number {
+    margin-left: auto;
+  }
+
+  .connector {
+    /* Always last: even steps reorder their copy to the right column */
+    order: 3;
+    grid-column: 1 / -1;
+    height: 8rem;
+    width: 45%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connector svg {
+    animation: none;
+    clip-path: none;
+  }
+}

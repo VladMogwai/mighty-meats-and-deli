@@ -1,0 +1,69 @@
+/* Scroll-reveal animations. Hidden state applies only once JS marked the page as ready. */
+:root {
+  --reveal-duration: 750ms;
+  --reveal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --reveal-letter-step: 40ms;
+}
+
+.reveal-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.reveal-letter {
+  display: inline-block;
+}
+
+.reveal-ready [data-reveal='fade-up'],
+.reveal-ready [data-reveal='slide-left'],
+.reveal-ready [data-reveal='slide-right'],
+.reveal-ready [data-reveal='zoom'],
+.reveal-ready [data-reveal='draw-x'],
+.reveal-ready [data-reveal='letters'] .reveal-letter {
+  opacity: 0;
+  transition:
+    opacity var(--reveal-duration) var(--reveal-ease),
+    transform var(--reveal-duration) var(--reveal-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-ready [data-reveal='fade-up'] {
+  transform: translateY(2rem);
+}
+
+.reveal-ready [data-reveal='slide-left'] {
+  transform: translateX(-3rem);
+}
+
+.reveal-ready [data-reveal='slide-right'] {
+  transform: translateX(3rem);
+}
+
+.reveal-ready [data-reveal='zoom'] {
+  transform: scale(0.6);
+}
+
+/* A line growing from its centre */
+.reveal-ready [data-reveal='draw-x'] {
+  transform: scaleX(0);
+}
+
+.reveal-ready [data-reveal='letters'] .reveal-letter {
+  transform: translateY(1.1em);
+  transition-delay: calc(var(--reveal-delay, 0ms) + var(--letter-index) * var(--reveal-letter-step));
+}
+
+.reveal-ready [data-revealed='true'][data-reveal],
+.reveal-ready [data-revealed='true'][data-reveal='letters'] .reveal-letter {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-ready [data-reveal],
+  .reveal-ready [data-reveal='letters'] .reveal-letter {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

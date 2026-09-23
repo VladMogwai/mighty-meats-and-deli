@@ -1,0 +1,13 @@
+.videos {
+  margin-block: 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+  gap: 1.5rem;
+}
+
+.item {
+  margin: 0;
+}

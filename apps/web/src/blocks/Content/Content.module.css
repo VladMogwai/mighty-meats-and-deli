@@ -1,0 +1,24 @@
+.content {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+  margin-block: 4rem;
+}
+
+.heading {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .content[data-has-image='true'] {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}

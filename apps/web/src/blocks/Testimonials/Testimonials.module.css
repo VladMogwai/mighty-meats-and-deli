@@ -1,0 +1,17 @@
+.testimonials {
+  margin-block: 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 1.5rem;
+}
+
+.item {
+  margin: 0;
+}
+
+.item blockquote {
+  margin: 0 0 0.5rem;
+}

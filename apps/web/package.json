@@ -1,0 +1,33 @@
+{
+  "name": "@mighty-meats/web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Public website: static HTML built from CMS content, hosted on Cloudflare Pages",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "build": "next build",
+    "preview": "npx --yes serve@14 out -l 3000",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@mighty-meats/shared": "workspace:*",
+    "@payloadcms/richtext-lexical": "3.90.2",
+    "next": "16.3.3",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.9",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "eslint": "^9.16.0",
+    "eslint-config-next": "16.3.3",
+    "typescript": "5.7.3",
+    "vite-tsconfig-paths": "6.0.5",
+    "vitest": "4.0.18"
+  }
+}

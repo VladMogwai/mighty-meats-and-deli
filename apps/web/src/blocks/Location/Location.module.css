@@ -1,0 +1,29 @@
+.location {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+  margin-block: 4rem;
+}
+
+.heading {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.address {
+  font-size: 1.125rem;
+}
+
+.map {
+  display: block;
+  width: 100%;
+  min-height: 320px;
+  border: 0;
+}
+
+@media (min-width: 768px) {
+  .location {
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+  }
+}

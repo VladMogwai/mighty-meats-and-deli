@@ -1,0 +1,228 @@
+.section {
+  padding-block: 5rem;
+  color: var(--color-on-dark);
+  background:
+    radial-gradient(ellipse at 50% 55%, rgb(255 255 255 / 0.06), transparent 60%),
+    var(--color-dark);
+  overflow: hidden;
+}
+
+.header {
+  max-width: 44rem;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.heading {
+  margin: 0 0 1rem;
+  color: var(--color-accent);
+  font-size: clamp(2.5rem, 7vw, 4rem);
+}
+
+.intro {
+  margin: 0 0 1.5rem;
+}
+
+.divider {
+  width: min(12rem, 60%);
+  height: 1px;
+  margin-inline: auto;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+.slider {
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.slide {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+  text-align: center;
+}
+
+.details {
+  order: 2;
+}
+
+.imageWrap {
+  order: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.perfectFor {
+  order: 3;
+}
+
+.name {
+  margin: 0 0 1rem;
+  color: var(--color-accent);
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+}
+
+.description {
+  max-width: 28rem;
+  margin: 0 auto 1.5rem;
+}
+
+.price {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.image {
+  display: block;
+  width: min(100%, 26rem);
+  height: auto;
+  max-height: 32rem;
+  object-fit: cover;
+  /* Dissolve the photo's edges into the dark section so it reads like a cut-out */
+  mask-image: radial-gradient(ellipse 50% 50% at center, #000 55%, transparent 100%);
+}
+
+.perfectForLabel {
+  margin: 0 0 1rem;
+  color: var(--color-accent);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.methods {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-transform: uppercase;
+}
+
+.methods li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.methodIcon {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 3rem;
+}
+
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0;
+  color: var(--color-accent);
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    background-color 200ms,
+    color 200ms;
+}
+
+.arrow:hover,
+.arrow:focus-visible {
+  color: var(--color-on-dark);
+  background: var(--color-accent);
+}
+
+.arrow svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+/* Slide entrance: text rises, image glides in from the side we move towards */
+.slide .details,
+.slide .perfectFor {
+  animation: rise 700ms var(--reveal-ease) both;
+}
+
+.slide .perfectFor {
+  animation-delay: 150ms;
+}
+
+.slide[data-direction='next'] .imageWrap {
+  animation: from-right 800ms var(--reveal-ease) both;
+}
+
+.slide[data-direction='prev'] .imageWrap {
+  animation: from-left 800ms var(--reveal-ease) both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+}
+
+@keyframes from-right {
+  from {
+    opacity: 0;
+    transform: translateX(4rem) rotate(8deg) scale(0.9);
+  }
+}
+
+@keyframes from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-4rem) rotate(-8deg) scale(0.9);
+  }
+}
+
+@media (min-width: 900px) {
+  .slide {
+    grid-template-columns: 1fr 1.2fr 0.7fr;
+    gap: 3rem;
+    text-align: left;
+  }
+
+  .details,
+  .imageWrap,
+  .perfectFor {
+    order: 0;
+  }
+
+  .description {
+    margin-inline: 0;
+  }
+
+  .perfectFor {
+    text-align: center;
+  }
+
+  .methods {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide .details,
+  .slide .perfectFor,
+  .slide .imageWrap {
+    animation: none !important;
+  }
+}

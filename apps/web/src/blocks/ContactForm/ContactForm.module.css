@@ -1,0 +1,24 @@
+.contactForm {
+  margin-block: 2rem;
+  max-width: 40rem;
+}
+
+.form {
+  display: grid;
+  gap: 1rem;
+}
+
+.form label {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.error {
+  color: var(--color-error);
+  font-size: 0.875rem;
+}
+
+.honeypot {
+  position: absolute;
+  left: -9999px;
+}

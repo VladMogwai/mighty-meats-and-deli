@@ -1,0 +1,17 @@
+# Free Supabase projects are paused after 7 days without activity.
+# Pinging the CMS health endpoint (which queries the database) every 3 days prevents that.
+# Set the repository variable CMS_URL (Settings → Secrets and variables → Actions → Variables).
+name: Keep database awake
+
+on:
+  schedule:
+    - cron: '0 9 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping CMS health endpoint
+        # The free Render instance may need up to a minute to wake up
+        run: curl --fail --silent --show-error --retry 3 --retry-delay 30 --max-time 120 "${{ vars.CMS_URL }}/api/health"

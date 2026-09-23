@@ -1,0 +1,19 @@
+{
+  "name": "@mighty-meats/shared",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Code shared by the CMS and the website: Payload types, constants, video URL parser",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "payload": "3.90.2",
+    "typescript": "5.7.3",
+    "vitest": "4.0.18"
+  }
+}

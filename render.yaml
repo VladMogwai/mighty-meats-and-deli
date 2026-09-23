@@ -1,0 +1,39 @@
+# Render Blueprint: Payload CMS (admin + REST API) on the free plan.
+# Render → New → Blueprint → pick this repository.
+services:
+  - type: web
+    name: mighty-meats-cms
+    runtime: node
+    plan: free
+    # Closest Render region to the Supabase project (ca-central-1, Montreal)
+    region: virginia
+    buildCommand: corepack pnpm install --frozen-lockfile && corepack pnpm --filter @mighty-meats/cms build
+    # Pending database migrations run automatically when Payload starts (prodMigrations)
+    startCommand: corepack pnpm --filter @mighty-meats/cms start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.23.2
+      # Lets corepack fetch the pnpm version pinned in package.json without asking
+      - key: COREPACK_ENABLE_DOWNLOAD_PROMPT
+        value: '0'
+      - key: PAYLOAD_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: WEB_URL
+        sync: false
+      - key: WEB_DEPLOY_HOOK_URL
+        sync: false
+      - key: S3_BUCKET
+        sync: false
+      - key: S3_ENDPOINT
+        sync: false
+      - key: S3_REGION
+        sync: false
+      - key: S3_ACCESS_KEY_ID
+        sync: false
+      - key: S3_SECRET_ACCESS_KEY
+        sync: false
+      - key: S3_PUBLIC_URL
+        sync: false
