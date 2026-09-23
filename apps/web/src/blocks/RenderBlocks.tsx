@@ -8,6 +8,7 @@ import { HeroBlock } from './Hero/Component'
 import { LocationBlock } from './Location/Component'
 import { PartnerListBlock } from './PartnerList/Component'
 import { ProductListBlock } from './ProductList/Component'
+import { ShortsBlock } from './Shorts/Component'
 import { StepsBlock } from './Steps/Component'
 import { TestimonialsBlock } from './Testimonials/Component'
 import { VideoGalleryBlock } from './VideoGallery/Component'
@@ -26,6 +27,8 @@ const renderBlock = (block: PageBlock, index: number) => {
       return <GalleryBlock {...block} />
     case 'videoGallery':
       return <VideoGalleryBlock {...block} />
+    case 'shorts':
+      return <ShortsBlock {...block} />
     case 'productList':
       return <ProductListBlock {...block} />
     case 'featuredProducts':

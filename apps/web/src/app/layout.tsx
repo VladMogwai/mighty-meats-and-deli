@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import { Bebas_Neue, Montserrat } from 'next/font/google'
-import Script from 'next/script'
 import type { ReactNode } from 'react'
 
-import { REVEAL_READY_SCRIPT, RevealObserver } from '@/components/motion/RevealObserver'
+import { RevealObserver } from '@/components/motion/RevealObserver'
 import { SiteFooter } from '@/components/layout/SiteFooter'
 import { SiteHeader } from '@/components/layout/SiteHeader'
 import { TopBar } from '@/components/layout/TopBar'
@@ -49,12 +48,8 @@ export default async function FrontendLayout({ children }: { children: ReactNode
   const [settings, navigation] = await Promise.all([getSiteSettings(), getNavigation()])
 
   return (
-    // suppressHydrationWarning: the reveal script adds a class to <html> before React hydrates
-    <html lang="en" className={`${displayFont.variable} ${bodyFont.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${displayFont.variable} ${bodyFont.variable}`}>
       <body>
-        <Script id="reveal-ready" strategy="beforeInteractive">
-          {REVEAL_READY_SCRIPT}
-        </Script>
         <a href="#content" className="skip-link">
           Skip to content
         </a>

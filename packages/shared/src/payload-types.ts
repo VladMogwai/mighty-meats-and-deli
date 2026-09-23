@@ -157,6 +157,7 @@ export interface Page {
         | StepsBlock
         | GalleryBlock
         | VideoGalleryBlock
+        | ShortsBlock
         | ProductListBlock
         | FeaturedProductsBlock
         | PartnerListBlock
@@ -327,6 +328,22 @@ export interface Video {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ShortsBlock".
+ */
+export interface ShortsBlock {
+  eyebrow?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  /**
+   * Vertical videos work best: uploaded 9:16 files, YouTube Shorts, TikTok or Instagram Reels links.
+   */
+  videos: (number | Video)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'shorts';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ProductListBlock".
  */
 export interface ProductListBlock {
@@ -393,6 +410,17 @@ export interface Product {
    */
   image?: (number | null) | Media;
   perfectFor?: ('bbq' | 'grilling' | 'frying' | 'roasting' | 'slow-cooking' | 'stewing')[] | null;
+  /**
+   * Pick a video or create a new one with "+": a YouTube/Vimeo link or an uploaded file.
+   */
+  video?: (number | null) | Video;
+  /**
+   * Optional button, e.g. "Order on Instagram".
+   */
+  link?: {
+    label?: string | null;
+    url?: string | null;
+  };
   isAvailable?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -628,6 +656,7 @@ export interface PagesSelect<T extends boolean = true> {
         steps?: T | StepsBlockSelect<T>;
         gallery?: T | GalleryBlockSelect<T>;
         videoGallery?: T | VideoGalleryBlockSelect<T>;
+        shorts?: T | ShortsBlockSelect<T>;
         productList?: T | ProductListBlockSelect<T>;
         featuredProducts?: T | FeaturedProductsBlockSelect<T>;
         partnerList?: T | PartnerListBlockSelect<T>;
@@ -724,6 +753,18 @@ export interface VideoGalleryBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ShortsBlock_select".
+ */
+export interface ShortsBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  intro?: T;
+  videos?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ProductListBlock_select".
  */
 export interface ProductListBlockSelect<T extends boolean = true> {
@@ -797,6 +838,13 @@ export interface ProductsSelect<T extends boolean = true> {
   price?: T;
   image?: T;
   perfectFor?: T;
+  video?: T;
+  link?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
   isAvailable?: T;
   updatedAt?: T;
   createdAt?: T;

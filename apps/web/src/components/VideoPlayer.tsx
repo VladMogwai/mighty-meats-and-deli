@@ -1,8 +1,8 @@
-import { parseVideoUrl } from '@mighty-meats/shared/video'
 import type { Media, Video } from '@mighty-meats/shared/payload-types'
 
 import { mediaUrl } from '@/lib/media'
 
+import { EmbeddedVideo } from './EmbeddedVideo'
 import styles from './VideoPlayer.module.css'
 
 const asMedia = (value: Media | number | null | undefined): Media | null =>
@@ -24,20 +24,5 @@ export const VideoPlayer = ({ video }: { video: Video }) => {
     )
   }
 
-  const parsed = video.url ? parseVideoUrl(video.url) : null
-  if (!parsed) return null
-
-  return (
-    <div className={parsed.isVertical ? styles.vertical : styles.landscape}>
-      <iframe
-        className={styles.frame}
-        src={parsed.embedUrl}
-        title={video.title}
-        loading="lazy"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerPolicy="strict-origin-when-cross-origin"
-        allowFullScreen
-      />
-    </div>
-  )
+  return video.url ? <EmbeddedVideo url={video.url} title={video.title} /> : null
 }

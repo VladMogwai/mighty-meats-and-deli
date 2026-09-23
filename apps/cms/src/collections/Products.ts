@@ -47,6 +47,33 @@ export const Products: CollectionConfig = {
       options: COOKING_METHODS.map(({ value, label }) => ({ value, label })),
     },
     {
+      name: 'video',
+      type: 'relationship',
+      relationTo: 'videos',
+      admin: {
+        description: 'Pick a video or create a new one with "+": a YouTube/Vimeo link or an uploaded file.',
+      },
+    },
+    {
+      name: 'link',
+      type: 'group',
+      admin: { description: 'Optional button, e.g. "Order on Instagram".' },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'label', type: 'text' },
+            {
+              name: 'url',
+              type: 'text',
+              validate: (value: null | string | undefined) =>
+                !value || /^https?:\/\/\S+$/.test(value) ? true : 'Enter a full link starting with https://',
+            },
+          ],
+        },
+      ],
+    },
+    {
       name: 'isAvailable',
       type: 'checkbox',
       label: 'Available',

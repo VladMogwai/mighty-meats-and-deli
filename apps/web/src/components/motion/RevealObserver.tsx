@@ -32,8 +32,3 @@ export const RevealObserver = (): null => {
   return null
 }
 
-/**
- * Runs before first paint: hides reveal targets only when JS is available,
- * so the content stays visible for no-JS visitors and crawlers.
- */
-export const REVEAL_READY_SCRIPT = `document.documentElement.classList.add('reveal-ready')`

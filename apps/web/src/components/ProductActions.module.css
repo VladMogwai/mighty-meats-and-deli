@@ -1,0 +1,20 @@
+.buttons {
+  display: flex;
+  /* Parents can centre the buttons by setting this variable */
+  justify-content: var(--product-actions-justify, flex-start);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.button {
+  min-height: 40px;
+  padding-inline: 1rem;
+  color: var(--color-accent);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.video {
+  margin-top: 0.75rem;
+}

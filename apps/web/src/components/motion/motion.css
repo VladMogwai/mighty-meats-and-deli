@@ -1,4 +1,8 @@
-/* Scroll-reveal animations. Hidden state applies only once JS marked the page as ready. */
+/*
+ * Scroll-reveal animations. The hidden starting state applies only when the browser
+ * runs JavaScript (it is the RevealObserver that reveals elements), so visitors and
+ * crawlers without JS — or browsers without the `scripting` media feature — see everything.
+ */
 :root {
   --reveal-duration: 750ms;
   --reveal-ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -14,56 +18,49 @@
   display: inline-block;
 }
 
-.reveal-ready [data-reveal='fade-up'],
-.reveal-ready [data-reveal='slide-left'],
-.reveal-ready [data-reveal='slide-right'],
-.reveal-ready [data-reveal='zoom'],
-.reveal-ready [data-reveal='draw-x'],
-.reveal-ready [data-reveal='letters'] .reveal-letter {
-  opacity: 0;
-  transition:
-    opacity var(--reveal-duration) var(--reveal-ease),
-    transform var(--reveal-duration) var(--reveal-ease);
-  transition-delay: var(--reveal-delay, 0ms);
-}
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-reveal='fade-up'],
+  [data-reveal='slide-left'],
+  [data-reveal='slide-right'],
+  [data-reveal='zoom'],
+  [data-reveal='draw-x'],
+  [data-reveal='letters'] .reveal-letter {
+    opacity: 0;
+    transition:
+      opacity var(--reveal-duration) var(--reveal-ease),
+      transform var(--reveal-duration) var(--reveal-ease);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
 
-.reveal-ready [data-reveal='fade-up'] {
-  transform: translateY(2rem);
-}
+  [data-reveal='fade-up'] {
+    transform: translateY(2rem);
+  }
 
-.reveal-ready [data-reveal='slide-left'] {
-  transform: translateX(-3rem);
-}
+  [data-reveal='slide-left'] {
+    transform: translateX(-3rem);
+  }
 
-.reveal-ready [data-reveal='slide-right'] {
-  transform: translateX(3rem);
-}
+  [data-reveal='slide-right'] {
+    transform: translateX(3rem);
+  }
 
-.reveal-ready [data-reveal='zoom'] {
-  transform: scale(0.6);
-}
+  [data-reveal='zoom'] {
+    transform: scale(0.6);
+  }
 
-/* A line growing from its centre */
-.reveal-ready [data-reveal='draw-x'] {
-  transform: scaleX(0);
-}
+  /* A line growing from its centre */
+  [data-reveal='draw-x'] {
+    transform: scaleX(0);
+  }
 
-.reveal-ready [data-reveal='letters'] .reveal-letter {
-  transform: translateY(1.1em);
-  transition-delay: calc(var(--reveal-delay, 0ms) + var(--letter-index) * var(--reveal-letter-step));
-}
+  [data-reveal='letters'] .reveal-letter {
+    transform: translateY(1.1em);
+    transition-delay: calc(var(--reveal-delay, 0ms) + var(--letter-index) * var(--reveal-letter-step));
+  }
 
-.reveal-ready [data-revealed='true'][data-reveal],
-.reveal-ready [data-revealed='true'][data-reveal='letters'] .reveal-letter {
-  opacity: 1;
-  transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal-ready [data-reveal],
-  .reveal-ready [data-reveal='letters'] .reveal-letter {
+  [data-revealed='true'][data-reveal],
+  [data-revealed='true'][data-reveal='letters'] .reveal-letter {
     opacity: 1;
     transform: none;
-    transition: none;
   }
 }

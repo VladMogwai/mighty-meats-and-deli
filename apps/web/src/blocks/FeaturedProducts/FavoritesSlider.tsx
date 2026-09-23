@@ -6,6 +6,7 @@ import { type PointerEvent, useRef, useState } from 'react'
 
 import { CookingIcon } from '@/components/icons/CookingIcon'
 import { MediaImage } from '@/components/MediaImage'
+import { ProductActions } from '@/components/ProductActions'
 
 import styles from './FeaturedProducts.module.css'
 
@@ -63,6 +64,11 @@ export const FavoritesSlider = ({ products }: { products: Product[] }) => {
           <h3 className={styles.name}>{product.name}</h3>
           {product.description && <p className={styles.description}>{product.description}</p>}
           {product.price && <p className={styles.price}>{product.price}</p>}
+          <ProductActions
+            video={product.video}
+            link={product.link}
+            className={styles.actions}
+          />
         </div>
 
         <div className={styles.imageWrap}>

@@ -8,6 +8,7 @@ import { HeroBlock } from './Hero/config'
 import { LocationBlock } from './Location/config'
 import { PartnerListBlock } from './PartnerList/config'
 import { ProductListBlock } from './ProductList/config'
+import { ShortsBlock } from './Shorts/config'
 import { StepsBlock } from './Steps/config'
 import { TestimonialsBlock } from './Testimonials/config'
 import { VideoGalleryBlock } from './VideoGallery/config'
@@ -18,6 +19,7 @@ export const pageBlocks: Block[] = [
   StepsBlock,
   GalleryBlock,
   VideoGalleryBlock,
+  ShortsBlock,
   ProductListBlock,
   FeaturedProductsBlock,
   PartnerListBlock,

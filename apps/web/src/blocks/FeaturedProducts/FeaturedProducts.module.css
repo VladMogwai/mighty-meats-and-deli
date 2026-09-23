@@ -77,6 +77,11 @@
   text-transform: uppercase;
 }
 
+.actions {
+  --product-actions-justify: center;
+  margin-top: 1rem;
+}
+
 .image {
   display: block;
   width: min(100%, 26rem);
@@ -300,6 +305,10 @@
 
   .description {
     margin-inline: 0;
+  }
+
+  .actions {
+    --product-actions-justify: flex-start;
   }
 
   .perfectFor {

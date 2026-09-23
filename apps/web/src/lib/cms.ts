@@ -57,7 +57,8 @@ export const getNavigation = cache(() => cmsFetch<Navigation>('/globals/navigati
 export const getAllPages = cache(() => findAll<Page>('pages', { depth: 0 }))
 
 export const getPageBySlug = cache(async (slug: string = HOME_SLUG): Promise<Page | null> => {
-  const docs = await findAll<Page>('pages', { 'where[slug][equals]': slug, limit: 1, depth: 2 })
+  // depth 3: page → featured product → its video → the video file
+  const docs = await findAll<Page>('pages', { 'where[slug][equals]': slug, limit: 1, depth: 3 })
   return docs[0] ?? null
 })
 

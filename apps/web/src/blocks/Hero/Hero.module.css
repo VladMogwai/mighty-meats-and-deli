@@ -8,8 +8,12 @@
   display: grid;
   gap: 2rem;
   align-items: center;
+  padding-block: 2rem;
+}
+
+/* A tall first screen only makes sense with a photo; text-only heroes stay compact */
+.inner[data-has-image='true'] {
   min-height: min(80svh, 44rem);
-  padding-block: 3rem;
 }
 
 .heading {
@@ -52,6 +56,10 @@
 }
 
 @media (min-width: 900px) {
+  .inner {
+    padding-block: 3rem;
+  }
+
   .inner[data-has-image='true'] {
     grid-template-columns: 1fr 1.1fr;
     gap: 3rem;
