@@ -16,6 +16,12 @@ import { cache } from 'react'
  * The free CMS instance sleeps when idle and needs up to a minute to wake up,
  * hence the generous timeout and retries.
  */
+const isCiBuild = Boolean(process.env.CF_PAGES || process.env.CI)
+
+if (isCiBuild && !process.env.CMS_URL) {
+  throw new Error('CMS_URL is not set. Add it to the build environment variables (e.g. Cloudflare Pages → Settings).')
+}
+
 const CMS_URL = (process.env.CMS_URL || 'http://localhost:3001').replace(/\/$/, '')
 const REQUEST_TIMEOUT_MS = 90_000
 const MAX_ATTEMPTS = 3
