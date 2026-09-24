@@ -1,0 +1,27 @@
+.list {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 40px targets: comfortable to tap on phones */
+.link {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  color: inherit;
+  border-radius: 50%;
+  transition:
+    color 200ms,
+    background-color 200ms;
+}
+
+.link:hover,
+.link:focus-visible {
+  color: var(--color-accent);
+  background: rgb(217 74 74 / 0.08);
+}

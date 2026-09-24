@@ -6,6 +6,7 @@ import type { Navigation, SiteSetting } from '@mighty-meats/shared/payload-types
 
 import { MainNav, type NavItem } from './MainNav'
 import styles from './SiteHeader.module.css'
+import { SocialLinks } from './SocialLinks'
 
 type Props = { settings: SiteSetting; navigation: Navigation }
 
@@ -25,7 +26,10 @@ export const SiteHeader = ({ settings, navigation }: Props) => {
             settings.siteName
           )}
         </Link>
-        <MainNav items={items} />
+        <div className={styles.end}>
+          <MainNav items={items} />
+          <SocialLinks links={settings.socialLinks} className={styles.social} />
+        </div>
       </div>
     </header>
   )
