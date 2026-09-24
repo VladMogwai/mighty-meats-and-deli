@@ -98,6 +98,19 @@ export const SiteSettings: GlobalConfig = {
                 { name: 'url', type: 'text', required: true },
               ],
             },
+            {
+              name: 'youtubeChannel',
+              label: 'YouTube channel',
+              type: 'text',
+              admin: {
+                description:
+                  'Link to the shop channel, e.g. https://www.youtube.com/@mightymeats. The Ideas block can show its latest videos (set the block source to "YouTube channel").',
+              },
+              validate: (value: null | string | undefined) =>
+                !value || /^https:\/\/(www\.)?youtube\.com\/(@[\w.-]+|channel\/UC[\w-]{22})\/?$/.test(value.trim())
+                  ? true
+                  : 'Paste the channel link: https://www.youtube.com/@name or https://www.youtube.com/channel/UC…',
+            },
           ],
         },
       ],

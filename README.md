@@ -104,6 +104,16 @@ pnpm --filter @mighty-meats/cms generate:importmap
 
 Бесплатный проект Supabase ставится на паузу после 7 дней без запросов. Workflow `.github/workflows/keep-alive.yml` раз в 3 дня дёргает `/api/health`. Нужно задать переменную репозитория `CMS_URL` (Settings → Secrets and variables → Actions → Variables).
 
+### 5. YouTube-канал для блока Ideas (когда появится)
+
+Блок Ideas умеет показывать последние ролики канала магазина (Shorts — вертикально). Ключи API не нужны: сайт при сборке читает открытую RSS-ленту канала (до 15 последних роликов).
+
+1. Админка → **Site Settings → Social → YouTube channel**: ссылка вида `https://www.youtube.com/@name`.
+2. Админка → **Pages → Home → блок Ideas → Source**: «Latest videos from the YouTube channel», при желании поменять количество.
+3. Чтобы новые ролики появлялись сами: GitHub → Settings → Secrets and variables → Actions → **Secrets** → `CF_PAGES_DEPLOY_HOOK` = ссылка deploy hook из Cloudflare. Workflow `daily-rebuild.yml` пересобирает сайт каждый день в 06:00 по Виннипегу.
+
+Пока на канале нет роликов или он недоступен, блок показывает видео, выбранные вручную.
+
 ### Ограничения бесплатных тарифов
 
 | Сервис           | Лимит                                                   |

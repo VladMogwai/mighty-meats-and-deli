@@ -1,0 +1,23 @@
+# Rebuilds the static site once a day, so new videos from the shop's YouTube channel
+# (Ideas block with source "YouTube channel") appear without anyone touching the CMS.
+# Needs the repository secret CF_PAGES_DEPLOY_HOOK (Cloudflare Pages → Settings → Builds → Deploy hooks).
+name: Daily site rebuild
+
+on:
+  schedule:
+    - cron: '0 11 * * *' # 06:00 in Winnipeg (CDT)
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Cloudflare Pages build
+        env:
+          DEPLOY_HOOK: ${{ secrets.CF_PAGES_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$DEPLOY_HOOK" ]; then
+            echo "CF_PAGES_DEPLOY_HOOK is not set — nothing to do."
+            exit 0
+          fi
+          curl --fail --silent --show-error -X POST "$DEPLOY_HOOK"

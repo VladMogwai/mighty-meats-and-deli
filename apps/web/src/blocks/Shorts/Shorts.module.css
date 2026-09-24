@@ -81,6 +81,40 @@
   transition: border-radius 200ms;
 }
 
+/* YouTube cover with the muted preview player fading in on top */
+.thumbFrame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 0.75rem;
+}
+
+.thumbFrame .thumb {
+  border-radius: 0;
+}
+
+.preview {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* Shorts fill the 9:16 card; regular 16:9 videos are enlarged to cover it */
+  width: calc(100% * 16 / 9 * 16 / 9);
+  height: 100%;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: opacity 400ms;
+}
+
+.preview[data-vertical='true'] {
+  width: 100%;
+}
+
+.preview[data-ready='true'] {
+  opacity: 1;
+}
+
 .cardButton:hover .thumb,
 .cardButton:focus-visible .thumb {
   border-radius: 0.25rem;
@@ -152,6 +186,10 @@
   height: 100%;
   object-fit: contain;
   background: #000;
+}
+
+.player:is(iframe) {
+  border: 0;
 }
 
 .player :global(iframe) {

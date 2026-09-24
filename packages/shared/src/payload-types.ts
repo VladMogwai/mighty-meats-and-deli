@@ -192,6 +192,14 @@ export interface HeroBlock {
    * Shown next to the text. Several images become a swipeable slideshow.
    */
   images?: (number | Media)[] | null;
+  /**
+   * Plays silently in a loop behind the text (MP4, keep it under ~5 MB). The text stays readable thanks to a dark overlay.
+   */
+  backgroundVideo?: (number | null) | Media;
+  /**
+   * A still frame of the video: shown while it loads and to visitors who turned off animations.
+   */
+  backgroundPoster?: (number | null) | Media;
   callToAction?:
     | {
         link: {
@@ -335,9 +343,14 @@ export interface ShortsBlock {
   heading?: string | null;
   intro?: string | null;
   /**
-   * Vertical videos work best: uploaded 9:16 files, YouTube Shorts, TikTok or Instagram Reels links.
+   * The channel link is set in Site Settings → Social. New channel videos appear on the site within a day.
    */
-  videos: (number | Video)[];
+  source?: ('manual' | 'youtube') | null;
+  youtubeLimit?: number | null;
+  /**
+   * Vertical videos work best: uploaded 9:16 files or YouTube Shorts / TikTok / Reels links. With the YouTube source these are shown when the channel has no videos yet.
+   */
+  videos?: (number | Video)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'shorts';
@@ -687,6 +700,8 @@ export interface HeroBlockSelect<T extends boolean = true> {
   heading?: T;
   text?: T;
   images?: T;
+  backgroundVideo?: T;
+  backgroundPoster?: T;
   callToAction?:
     | T
     | {
@@ -763,6 +778,8 @@ export interface ShortsBlockSelect<T extends boolean = true> {
   eyebrow?: T;
   heading?: T;
   intro?: T;
+  source?: T;
+  youtubeLimit?: T;
   videos?: T;
   id?: T;
   blockName?: T;
@@ -1040,6 +1057,10 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Link to the shop channel, e.g. https://www.youtube.com/@mightymeats. The Ideas block can show its latest videos (set the block source to "YouTube channel").
+   */
+  youtubeChannel?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1099,6 +1120,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
+  youtubeChannel?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

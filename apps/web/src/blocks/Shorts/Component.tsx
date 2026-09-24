@@ -1,13 +1,26 @@
 import type { ShortsBlock as ShortsBlockData, Video } from '@mighty-meats/shared/payload-types'
 
 import { Reveal } from '@/components/motion/Reveal'
+import { getSiteSettings } from '@/lib/cms'
+import { getChannelVideos } from '@/lib/youtube'
 
+import { itemsFromChannel, itemsFromVideos } from './items'
 import styles from './Shorts.module.css'
 import { ShortsShelf } from './ShortsShelf'
 
-/** YouTube-Shorts-style shelf of vertical videos; a card opens a full-screen vertical player. */
-export const ShortsBlock = ({ eyebrow, heading, intro, videos }: ShortsBlockData) => {
-  const items = videos.filter((video): video is Video => typeof video === 'object')
+/**
+ * "Ideas" shelf of vertical videos. Shows the latest YouTube channel videos when the
+ * block source is "youtube" and the channel has any; otherwise the videos picked in the CMS.
+ */
+export const ShortsBlock = async ({ eyebrow, heading, intro, source, youtubeLimit, videos }: ShortsBlockData) => {
+  const picked = itemsFromVideos((videos ?? []).filter((video): video is Video => typeof video === 'object'))
+
+  let items = picked
+  if (source === 'youtube') {
+    const settings = await getSiteSettings()
+    const channelItems = itemsFromChannel(await getChannelVideos(settings.youtubeChannel, youtubeLimit ?? 10))
+    if (channelItems.length > 0) items = channelItems
+  }
   if (items.length === 0) return null
 
   return (
@@ -28,7 +41,7 @@ export const ShortsBlock = ({ eyebrow, heading, intro, videos }: ShortsBlockData
             <p className={styles.intro}>{intro}</p>
           </Reveal>
         )}
-        <ShortsShelf videos={items} />
+        <ShortsShelf items={items} />
       </div>
     </section>
   )
