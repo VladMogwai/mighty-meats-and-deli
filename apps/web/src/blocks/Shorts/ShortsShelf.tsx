@@ -11,6 +11,69 @@ const SWIPE_THRESHOLD_PX = 60
 /** Wait before loading a YouTube preview, so sweeping the mouse across the row loads nothing. */
 const HOVER_DELAY_MS = 300
 
+/** Share of a card that must be visible in the row before it autoplays on touch screens. */
+const ACTIVE_VISIBILITY = 0.6
+
+/**
+ * On touch screens (no hover) the most visible card of the row plays by itself,
+ * like in the YouTube and Instagram apps — but only while the row is on screen, and
+ * never for visitors who reduce motion or save data. Returns the index of that card.
+ */
+const useAutoplayIndex = (listRef: React.RefObject<HTMLUListElement | null>) => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null)
+
+  useEffect(() => {
+    const list = listRef.current
+    if (!list) return
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+    const enabled =
+      matchMedia('(hover: none)').matches &&
+      !matchMedia('(prefers-reduced-motion: reduce)').matches &&
+      !connection?.saveData
+    if (!enabled) return
+
+    const cards = [...list.children] as HTMLElement[]
+    const ratios = new Map<Element, number>()
+    let rowOnScreen = false
+
+    const update = () => {
+      if (!rowOnScreen) return setActiveIndex(null)
+      let best: number | null = null
+      cards.forEach((card, index) => {
+        const ratio = ratios.get(card) ?? 0
+        if (ratio >= ACTIVE_VISIBILITY && (best === null || ratio > (ratios.get(cards[best]) ?? 0))) best = index
+      })
+      setActiveIndex(best)
+    }
+
+    // Visibility of each card inside the horizontally scrolling row
+    const cardObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => ratios.set(entry.target, entry.intersectionRatio))
+        update()
+      },
+      { root: list, threshold: [0, 0.25, 0.5, ACTIVE_VISIBILITY, 0.75, 1] },
+    )
+    // Whether the row itself is on the page's screen
+    const rowObserver = new IntersectionObserver(
+      ([entry]) => {
+        rowOnScreen = entry.isIntersecting
+        update()
+      },
+      { threshold: 0.5 },
+    )
+
+    cards.forEach((card) => cardObserver.observe(card))
+    rowObserver.observe(list)
+    return () => {
+      cardObserver.disconnect()
+      rowObserver.disconnect()
+    }
+  }, [listRef])
+
+  return activeIndex
+}
+
 const youtubeThumbnail = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
 
 const youtubeEmbed = (id: string, { preview }: { preview: boolean }) => {
@@ -25,8 +88,16 @@ const youtubeEmbed = (id: string, { preview }: { preview: boolean }) => {
 }
 
 /** Uploaded clip: first frame at rest, plays silently while hovered — instantly. */
-const FileThumbnail = ({ item }: { item: Extract<ShelfItem, { kind: 'file' }> }) => {
+const FileThumbnail = ({ item, isActive }: { item: Extract<ShelfItem, { kind: 'file' }>; isActive: boolean }) => {
   const ref = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const video = ref.current
+    if (!video) return
+    if (isActive) video.play().catch(() => {})
+    else video.pause()
+  }, [isActive])
+
   return (
     <video
       ref={ref}
@@ -45,7 +116,7 @@ const FileThumbnail = ({ item }: { item: Extract<ShelfItem, { kind: 'file' }> })
 }
 
 /** YouTube video: cover image at rest; a muted YouTube player fades in over it after a short hover. */
-const YouTubeThumbnail = ({ item }: { item: Extract<ShelfItem, { kind: 'youtube' }> }) => {
+const YouTubeThumbnail = ({ item, isActive }: { item: Extract<ShelfItem, { kind: 'youtube' }>; isActive: boolean }) => {
   const [isPreviewing, setIsPreviewing] = useState(false)
   const [isPlayerReady, setIsPlayerReady] = useState(false)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -59,6 +130,18 @@ const YouTubeThumbnail = ({ item }: { item: Extract<ShelfItem, { kind: 'youtube'
     setIsPlayerReady(false)
   }
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current) }, [])
+
+  // Touch screens: the card chosen by useAutoplayIndex previews by itself (same delay,
+  // so a quick swipe past a card does not load its player)
+  useEffect(() => {
+    if (!isActive) return
+    const delay = setTimeout(() => setIsPreviewing(true), HOVER_DELAY_MS)
+    return () => {
+      clearTimeout(delay)
+      setIsPreviewing(false)
+      setIsPlayerReady(false)
+    }
+  }, [isActive])
 
   return (
     <span className={styles.thumbFrame} onMouseEnter={start} onMouseLeave={stop}>
@@ -82,9 +165,9 @@ const YouTubeThumbnail = ({ item }: { item: Extract<ShelfItem, { kind: 'youtube'
   )
 }
 
-const Thumbnail = ({ item }: { item: ShelfItem }) => {
-  if (item.kind === 'file') return <FileThumbnail item={item} />
-  if (item.kind === 'youtube') return <YouTubeThumbnail item={item} />
+const Thumbnail = ({ item, isActive }: { item: ShelfItem; isActive: boolean }) => {
+  if (item.kind === 'file') return <FileThumbnail item={item} isActive={isActive} />
+  if (item.kind === 'youtube') return <YouTubeThumbnail item={item} isActive={isActive} />
   return <span className={styles.thumb} />
 }
 
@@ -189,14 +272,16 @@ const Viewer = ({ items, index, onChange, onClose }: {
 
 export const ShortsShelf = ({ items }: { items: ShelfItem[] }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const listRef = useRef<HTMLUListElement>(null)
+  const autoplayIndex = useAutoplayIndex(listRef)
 
   return (
     <>
-      <ul className={styles.shelf}>
+      <ul ref={listRef} className={styles.shelf}>
         {items.map((item, index) => (
           <li key={item.key} className={styles.card}>
             <button type="button" className={styles.cardButton} onClick={() => setOpenIndex(index)}>
-              <Thumbnail item={item} />
+              <Thumbnail item={item} isActive={openIndex === null && autoplayIndex === index} />
               <span className={styles.title}>{item.title}</span>
               {item.description && <span className={styles.meta}>{item.description}</span>}
             </button>
