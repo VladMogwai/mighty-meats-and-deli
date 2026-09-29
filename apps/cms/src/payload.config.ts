@@ -32,8 +32,11 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     meta: { titleSuffix: ' — Mighty Meats Admin' },
+    theme: 'light',
     components: {
-      beforeDashboard: ['/components/admin/Dashboard#Dashboard'],
+      views: {
+        dashboard: { Component: '/components/admin/Dashboard#Dashboard' },
+      },
       graphics: {
         Logo: '/components/admin/Brand#Logo',
         Icon: '/components/admin/Brand#Icon',
