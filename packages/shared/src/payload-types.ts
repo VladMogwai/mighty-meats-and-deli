@@ -138,7 +138,7 @@ export interface UserAuthOperations {
   };
 }
 /**
- * The page with slug "home" is shown at the site root.
+ * The page with slug "home" is the home page. Open a page and edit its sections.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
@@ -217,6 +217,8 @@ export interface HeroBlock {
   blockType: 'hero';
 }
 /**
+ * All uploaded photos and video files. Usually you upload them right from a product or page.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
@@ -314,6 +316,8 @@ export interface VideoGalleryBlock {
   blockType: 'videoGallery';
 }
 /**
+ * Videos for the Ideas block and for products. A YouTube link is best; upload a file only if it is short.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "videos".
  */
@@ -410,6 +414,8 @@ export interface FeaturedProductsBlock {
   blockType: 'featuredProducts';
 }
 /**
+ * Everything on the Products pages. Untick “Available” to hide a product without deleting it.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "products".
  */
@@ -484,6 +490,8 @@ export interface TestimonialsBlock {
   blockType: 'testimonials';
 }
 /**
+ * Customer reviews shown on the site.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
