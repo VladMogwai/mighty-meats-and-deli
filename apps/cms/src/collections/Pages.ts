@@ -5,6 +5,7 @@ import { anyone, authenticated } from '../access'
 import { rebuildWebsiteHooks } from '../hooks/rebuildWebsite'
 import { pageBlocks } from '../blocks'
 import { slugField } from '../fields/slug'
+import { pagePreview } from '../utilities/sitePreview'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -17,7 +18,9 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
-    description: `The page with slug "${HOME_SLUG}" is shown at the site root.`,
+    description: `The page with slug "${HOME_SLUG}" is the home page. Open a page and edit its sections.`,
+    group: 'Website',
+    preview: pagePreview,
   },
   hooks: { ...rebuildWebsiteHooks },
   fields: [

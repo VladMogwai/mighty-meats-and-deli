@@ -31,6 +31,14 @@ export default buildConfig({
   serverURL: env.serverUrl,
   admin: {
     user: Users.slug,
+    meta: { titleSuffix: ' — Mighty Meats Admin' },
+    components: {
+      beforeDashboard: ['/components/admin/Dashboard#Dashboard'],
+      graphics: {
+        Logo: '/components/admin/Brand#Logo',
+        Icon: '/components/admin/Brand#Icon',
+      },
+    },
     importMap: {
       baseDir: path.resolve(dirname),
     },

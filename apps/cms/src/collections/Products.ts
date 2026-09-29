@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 
 import { anyone, authenticated } from '../access'
 import { rebuildWebsiteHooks } from '../hooks/rebuildWebsite'
+import { productPreview } from '../utilities/sitePreview'
 
 export const Products: CollectionConfig = {
   slug: 'products',
@@ -15,7 +16,9 @@ export const Products: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'category', 'price', 'isAvailable'],
-    group: 'Catalog',
+    group: 'Products',
+    description: 'Everything on the Products pages. Untick “Available” to hide a product without deleting it.',
+    preview: productPreview,
   },
   hooks: { ...rebuildWebsiteHooks },
   defaultSort: 'name',

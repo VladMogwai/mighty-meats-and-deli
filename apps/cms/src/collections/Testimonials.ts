@@ -13,6 +13,8 @@ export const Testimonials: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'author',
+    group: 'Website',
+    description: 'Customer reviews shown on the site.',
     defaultColumns: ['author', 'updatedAt'],
   },
   hooks: { ...rebuildWebsiteHooks },

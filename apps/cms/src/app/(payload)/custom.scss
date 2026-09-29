@@ -1,0 +1,94 @@
+/* Mighty Meats admin: brand marks and the dashboard with everyday tasks */
+
+.mm-logo {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.mm-icon {
+  display: inline-grid;
+  place-items: center;
+  /* The admin header gives the icon a 16px-wide slot */
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background: #b3261e;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.mm-dashboard {
+  margin-bottom: calc(var(--base) * 2);
+
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--base);
+    margin-bottom: var(--base);
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  &__site {
+    padding: 0.5rem 1rem;
+    border-radius: var(--style-radius-m);
+    background: var(--theme-elevation-800);
+    color: var(--theme-elevation-0);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  &__tasks {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--base);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__note {
+    margin-top: var(--base);
+    color: var(--theme-elevation-600);
+  }
+}
+
+.mm-task {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  height: 100%;
+  padding: calc(var(--base) * 1.1);
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: var(--style-radius-m);
+  background: var(--theme-elevation-50);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.15s;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--theme-elevation-500);
+    transform: translateY(-2px);
+  }
+
+  &__icon {
+    font-size: 1.6rem;
+  }
+
+  &__title {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  &__hint {
+    color: var(--theme-elevation-600);
+    font-size: 0.9rem;
+  }
+}

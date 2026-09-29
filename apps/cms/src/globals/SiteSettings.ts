@@ -16,6 +16,8 @@ export const SiteSettings: GlobalConfig = {
     read: anyone,
     update: authenticated,
   },
+  label: 'Shop info & hours',
+  admin: { group: 'Settings' },
   hooks: { afterChange: [rebuildWebsiteAfterGlobalChange] },
   fields: [
     {
@@ -36,7 +38,7 @@ export const SiteSettings: GlobalConfig = {
           ],
         },
         {
-          label: 'Contacts',
+          label: 'Contacts & hours',
           fields: [
             { name: 'phone', type: 'text' },
             { name: 'email', type: 'email' },

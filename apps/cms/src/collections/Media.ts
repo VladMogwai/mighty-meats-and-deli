@@ -11,6 +11,10 @@ export const Media: CollectionConfig = {
     update: authenticated,
     delete: authenticated,
   },
+  admin: {
+    group: 'Advanced',
+    description: 'All uploaded photos and video files. Usually you upload them right from a product or page.',
+  },
   hooks: { ...rebuildWebsiteHooks },
   fields: [
     {

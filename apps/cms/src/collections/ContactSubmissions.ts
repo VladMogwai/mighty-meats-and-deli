@@ -14,7 +14,7 @@ export const ContactSubmissions: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'email', 'createdAt'],
-    group: 'Inbox',
+    group: 'Advanced',
   },
   defaultSort: '-createdAt',
   fields: [

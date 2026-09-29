@@ -14,6 +14,8 @@ export const Videos: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
+    group: 'Website',
+    description: 'Videos for the Ideas block and for products. A YouTube link is best; upload a file only if it is short.',
     defaultColumns: ['title', 'source', 'updatedAt'],
   },
   hooks: { ...rebuildWebsiteHooks },

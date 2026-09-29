@@ -15,7 +15,7 @@ export const Partners: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'website'],
-    group: 'Catalog',
+    group: 'Products',
   },
   hooks: { ...rebuildWebsiteHooks },
   defaultSort: 'name',

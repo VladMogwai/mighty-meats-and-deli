@@ -10,6 +10,8 @@ export const Navigation: GlobalConfig = {
     read: anyone,
     update: authenticated,
   },
+  label: 'Menu',
+  admin: { group: 'Settings' },
   hooks: { afterChange: [rebuildWebsiteAfterGlobalChange] },
   fields: [
     {

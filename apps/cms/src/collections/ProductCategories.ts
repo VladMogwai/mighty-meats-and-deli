@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { anyone, authenticated } from '../access'
 import { rebuildWebsiteHooks } from '../hooks/rebuildWebsite'
 import { slugField } from '../fields/slug'
+import { categoryPreview } from '../utilities/sitePreview'
 
 export const ProductCategories: CollectionConfig = {
   slug: 'product-categories',
@@ -14,7 +15,8 @@ export const ProductCategories: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    group: 'Catalog',
+    group: 'Products',
+    preview: categoryPreview,
   },
   hooks: { ...rebuildWebsiteHooks },
   defaultSort: 'sortOrder',
