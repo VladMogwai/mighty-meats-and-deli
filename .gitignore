@@ -53,3 +53,6 @@ node_modules/
 /apps/web/out
 # Local preview config (machine-specific paths)
 .claude/launch.json
+
+# Client proposals and business notes (not for the public repo)
+/private/
